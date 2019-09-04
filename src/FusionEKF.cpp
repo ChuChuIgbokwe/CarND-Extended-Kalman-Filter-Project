@@ -36,7 +36,8 @@ FusionEKF::FusionEKF() {
    * TODO: Finish initializing the FusionEKF.
    * TODO: Set the process and measurement noises
    */
-
+    x = VectorXd(2);
+    x << 0, 0;
 
 }
 

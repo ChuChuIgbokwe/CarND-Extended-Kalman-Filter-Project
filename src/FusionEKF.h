@@ -44,6 +44,12 @@ class FusionEKF {
   Eigen::MatrixXd R_radar_;
   Eigen::MatrixXd H_laser_;
   Eigen::MatrixXd Hj_;
+  Eigen::VectorXd x;	// object state
+  Eigen::MatrixXd F_; //state transition matrix
+  Eigen::MatrixXd H_jacobian; //
+  Eigen::MatrixXd P; // object covariance matrix
+  Eigen::MatrixXd I; // Identity matrix
+  Eigen::MatrixXd Q;	// process covariance matrix
 };
 
 #endif // FusionEKF_H_
