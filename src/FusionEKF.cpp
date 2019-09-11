@@ -36,9 +36,8 @@ FusionEKF::FusionEKF() {
    * TODO: Finish initializing the FusionEKF.
    * TODO: Set the process and measurement noises
    */
-    x = VectorXd(2);
-    x << 0, 0;
-
+    noise_ax = 9;
+    noise_ay = 9;
 }
 
 /**
@@ -103,7 +102,8 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
     // TODO: Radar updates
 
-  } else {
+  }
+  else {
     // TODO: Laser updates
 
   }
