@@ -39,8 +39,25 @@ FusionEKF::FusionEKF() {
    * TODO: Finish initializing the FusionEKF.
    * TODO: Set the process and measurement noises
    */
-    noise_ax = 9;
-    noise_ay = 9;
+  noise_ax = 9;
+  noise_ay = 9;
+
+  // create a 4D state vector, we don't know yet the values of the x state
+  ekf_.x_ = VectorXd(4);
+
+  // state covariance matrix P
+  ekf_.P_ = MatrixXd(4, 4);
+  ekf_.P_ << 1, 0, 0, 0,
+             0, 1, 0, 0,
+             0, 0, 1000, 0,
+             0, 0, 0, 1000;
+
+  // the initial transition matrix F_
+  ekf_.F_ = MatrixXd(4, 4);
+  ekf_.F_ << 1, 0, 1, 0,
+            0, 1, 0, 1,
+            0, 0, 1, 0,
+            0, 0, 0, 1;
 }
 
 /**
@@ -75,6 +92,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       // TODO: Initialize state.
 
+
     }
 
     // done initializing, no need to predict or update
@@ -88,11 +106,15 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
 
   /**
    * TODO: Update the state transition matrix F according to the new elapsed time.
+   *
    * Time is measured in seconds.
    * TODO: Update the process noise covariance matrix.
    * Use noise_ax = 9 and noise_ay = 9 for your Q matrix.
    */
-
+  float dt = (measurement_pack.timestamp_ - previous_timestamp_) / 1000000.0;
+  previous_timestamp_ = measurement_pack.timestamp_;
+  ekf_.F_(0, 2) = dt;
+  ekf_.F_(1, 3) = dt;
   ekf_.Predict();
 
   /**
@@ -111,6 +133,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   }
   else {
     // TODO: Laser updates
+
 
   }
 
