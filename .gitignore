@@ -25,3 +25,5 @@ ide_profiles/xcode/ExtendedKF.build/
 
 # idea
 .idea/
+
+cmake-build-debug/ExtendedKF.dir/
